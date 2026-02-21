@@ -1,0 +1,30 @@
+groups:
+  - name: tabpfn_alerts
+    interval: 30s
+    rules:
+      - alert: HighShiftDetectionRate
+        expr: rate(shift_detected_total[5m]) > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High distribution shift detection rate"
+          description: "Shift detected at {{ $value }} per second over 5 minutes"
+
+      - alert: HighPredictionLatency
+        expr: histogram_quantile(0.95, rate(prediction_latency_seconds_bucket[5m])) > 1.0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High prediction latency"
+          description: "95th percentile latency is {{ $value }}s"
+
+      - alert: APIDown
+        expr: up{job="tabpfn-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "API is down"
+          description: "TabPFN API has been down for more than 1 minute"

@@ -1,0 +1,138 @@
+================================================================================
+                    AUC EVALUATION - QUICK REFERENCE
+================================================================================
+
+⚠️  CRITICAL: AUC requires PROBABILITIES, not binary predictions!
+
+================================================================================
+WRONG vs RIGHT
+================================================================================
+
+❌ WRONG (Binary Predictions):
+   predictions = model.predict(X_test)
+   # Returns: [0, 1, 0, 1, 1, 0, ...]
+   # Problem: Destroys ranking information!
+
+✅ RIGHT (Probabilities):
+   probabilities = model.predict_proba(X_test)
+   # Returns: [0.12, 0.87, 0.23, 0.95, 0.61, 0.08, ...]
+   # Benefit: Preserves full ranking for AUC!
+
+================================================================================
+WHY IT MATTERS
+================================================================================
+
+AUC (Area Under ROC Curve) measures:
+  → How well your model RANKS positive samples higher than negatives
+  → NOT classification accuracy at a threshold
+
+Example with 3 samples (true labels: [1, 0, 1]):
+
+Binary [1, 0, 1]:
+  • Can't tell which "1" is more confident
+  • No ranking information
+  • AUC calculation ambiguous
+
+Probabilities [0.95, 0.12, 0.78]:
+  • Clear ranking: 0.95 > 0.78 > 0.12
+  • Full confidence information
+  • Proper AUC calculation
+
+================================================================================
+CURRENT SUBMISSION STATUS
+================================================================================
+
+File: results/submission.csv
+
+✅ Format: PROBABILITIES (correct!)
+✅ Range: [0.0012, 0.9961]
+✅ Unique values: 350
+✅ Mean: 0.2706
+✅ Total predictions: 376
+
+Distribution:
+  • < 0.1:  180 samples (47.9%) - Low risk
+  • 0.1-0.3: 79 samples
+  • 0.3-0.5: 29 samples
+  • 0.5-0.7: 28 samples
+  • 0.7-0.9: 25 samples
+  • > 0.9:  35 samples (9.3%) - High risk
+
+================================================================================
+VERIFICATION
+================================================================================
+
+Run this to verify your submission:
+  python verify_probabilities.py
+
+Expected output:
+  ✅ CORRECT: Submission contains probabilities!
+
+If you see:
+  ❌ ERROR: Submission contains binary predictions!
+Then regenerate with:
+  python generate_submission.py
+
+================================================================================
+CODE EXAMPLES
+================================================================================
+
+# Get probabilities (for AUC)
+probs = model.predict_proba(X_test)
+
+# For binary classification, use [:, 1] to get P(class=1)
+if probs.ndim > 1:
+    probs = probs[:, 1]
+
+# Create submission
+submission = pd.DataFrame({
+    'Stock code': test_ids,
+    'IsDefault': probs  # Use probabilities!
+})
+
+# Evaluate AUC
+from sklearn.metrics import roc_auc_score
+auc = roc_auc_score(y_true, probs)  # ✓ Correct
+
+================================================================================
+WHEN TO USE WHAT
+================================================================================
+
+Probabilities (0.0-1.0):
+  ✓ AUC / ROC curve
+  ✓ Log Loss
+  ✓ Brier Score
+  ✓ Calibration metrics
+  ✓ Ranking tasks
+
+Binary (0/1):
+  ✓ Accuracy
+  ✓ Precision / Recall
+  ✓ F1 Score
+  ✓ Confusion Matrix
+  ✓ Classification tasks
+
+================================================================================
+QUICK CHECKLIST
+================================================================================
+
+Before submitting for AUC evaluation:
+
+[ ] Used predict_proba() not predict()
+[ ] Submission contains continuous values (0.0-1.0)
+[ ] NOT just 0 and 1
+[ ] Verified with verify_probabilities.py
+[ ] Checked probability range makes sense
+[ ] Confirmed unique values > 2
+
+================================================================================
+MORE INFO
+================================================================================
+
+Detailed explanation: IMPORTANT_AUC_NOTE.md
+Verification script: verify_probabilities.py
+Submission generator: generate_submission.py
+
+================================================================================
+STATUS: ✅ READY FOR AUC EVALUATION
+================================================================================
