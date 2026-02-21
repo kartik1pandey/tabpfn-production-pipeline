@@ -40,14 +40,14 @@ ENV/
 .env
 .env.local
 
-# Results and logs
+# Results and logs (keep structure, ignore outputs)
 results/*.json
 results/*.png
 results/*.md
-*.log
-
-# Keep submission template
+results/*.csv
 !results/.gitkeep
+!results/submission.csv
+*.log
 
 # OS
 .DS_Store
@@ -61,3 +61,14 @@ Thumbs.db
 # Monitoring data
 prometheus_data/
 grafana_data/
+
+# Large files (don't push to GitHub)
+*.h5
+*.pkl
+*.joblib
+*.model
+
+# Temporary files
+*.tmp
+*.bak
+*~

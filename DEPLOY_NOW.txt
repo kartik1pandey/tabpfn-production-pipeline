@@ -1,0 +1,197 @@
+================================================================================
+                    🚀 DEPLOY TO GITHUB + VERCEL NOW
+================================================================================
+
+READY TO DEPLOY! Follow these simple steps:
+
+================================================================================
+STEP 1: PREPARE REPOSITORY
+================================================================================
+
+Run this command:
+  .\prepare_github.ps1
+
+This will:
+  ✓ Initialize git
+  ✓ Clean up temporary files
+  ✓ Show what will be committed
+
+================================================================================
+STEP 2: DEPLOY (AUTOMATED)
+================================================================================
+
+Run this command:
+  .\deploy_to_vercel.ps1
+
+This will:
+  ✓ Commit all files
+  ✓ Push to GitHub (creates repo if needed)
+  ✓ Guide you through Vercel deployment
+
+================================================================================
+STEP 3: MANUAL DEPLOYMENT (ALTERNATIVE)
+================================================================================
+
+If you prefer manual control:
+
+1. Push to GitHub:
+   git init
+   git add .
+   git commit -m "feat: TabPFN Production Pipeline"
+   gh repo create tabpfn-production-pipeline --public --source=. --push
+
+2. Deploy to Vercel:
+   - Go to: https://vercel.com/new
+   - Import your repository
+   - Click Deploy
+
+3. Enable GitHub Pages:
+   - Settings → Pages
+   - Source: main branch, /docs folder
+
+================================================================================
+WHAT GETS DEPLOYED
+================================================================================
+
+✓ Core Pipeline (src/)
+  - data_loader.py
+  - shift_detector.py
+  - calibration.py
+  - conformal.py
+  - predictors.py
+  - api.py
+
+✓ API Entry Point (api/)
+  - index.py (Vercel handler)
+
+✓ Frontend (frontend/ & docs/)
+  - index.html (interactive demo)
+
+✓ Dataset (dataset/)
+  - train.csv (1442 samples)
+  - test.csv (376 samples)
+  - sample_submission.csv
+
+✓ Results (results/)
+  - submission.csv (probabilities!)
+
+✓ Documentation
+  - README.md
+  - DEPLOY_TO_VERCEL.md
+  - All guides
+
+✓ Configuration
+  - requirements.txt
+  - requirements-vercel.txt
+  - vercel.json
+  - .gitignore
+
+================================================================================
+WHAT DOESN'T GET PUSHED (CLEAN REPO)
+================================================================================
+
+✗ venv/ - Virtual environment
+✗ __pycache__/ - Python cache
+✗ .vscode/ - IDE settings
+✗ results/*.json - Experiment outputs
+✗ *.log - Log files
+
+Total repo size: ~5 MB (clean and professional!)
+
+================================================================================
+AFTER DEPLOYMENT
+================================================================================
+
+You'll have:
+
+1. GitHub Repository
+   https://github.com/YOUR_USERNAME/tabpfn-production-pipeline
+
+2. Vercel API (Free)
+   https://YOUR_PROJECT.vercel.app
+   https://YOUR_PROJECT.vercel.app/docs
+
+3. GitHub Pages Frontend (Free)
+   https://YOUR_USERNAME.github.io/tabpfn-production-pipeline/
+
+4. All features working:
+   ✓ Health check
+   ✓ Predictions (with probabilities!)
+   ✓ Shift detection
+   ✓ Metrics
+   ✓ Interactive frontend
+
+================================================================================
+TESTING YOUR DEPLOYMENT
+================================================================================
+
+# Health check
+curl https://YOUR_PROJECT.vercel.app/health
+
+# Make prediction
+curl -X POST "https://YOUR_PROJECT.vercel.app/predict" \
+  -H "Content-Type: application/json" \
+  -d '{"features": [[...]], "use_calibration": true}'
+
+# Open frontend
+https://YOUR_USERNAME.github.io/tabpfn-production-pipeline/
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Issue: GitHub CLI not found
+Solution: Install with: winget install GitHub.cli
+
+Issue: Vercel build fails
+Solution: Check requirements-vercel.txt is being used
+
+Issue: Frontend can't connect
+Solution: Update API URL in docs/index.html
+
+Issue: Need help
+Solution: See DEPLOY_TO_VERCEL.md for detailed guide
+
+================================================================================
+QUICK COMMANDS
+================================================================================
+
+# Prepare and deploy (automated)
+.\deploy_to_vercel.ps1
+
+# Or step by step
+.\prepare_github.ps1
+git add .
+git commit -m "feat: TabPFN Production Pipeline"
+git push
+
+# Then deploy to Vercel at: https://vercel.com/new
+
+================================================================================
+ESTIMATED TIME
+================================================================================
+
+Preparation: 1 minute
+GitHub push: 1 minute
+Vercel deployment: 2 minutes
+GitHub Pages: 1 minute
+
+Total: ~5 minutes to go live!
+
+================================================================================
+COST
+================================================================================
+
+GitHub: FREE
+Vercel: FREE (100GB bandwidth, 100k invocations/month)
+GitHub Pages: FREE
+
+Total: $0/month
+
+================================================================================
+
+Ready to deploy? Run: .\deploy_to_vercel.ps1
+
+Or see DEPLOY_TO_VERCEL.md for detailed instructions.
+
+================================================================================
